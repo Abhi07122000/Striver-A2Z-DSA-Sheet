@@ -1,1 +1,147 @@
+1. Rotate image
+class Solution {
+    public void rotate(int[][] matrix) {
+        for(int i = 0; i < matrix.length; i++) {
+            for(int j = i; j < matrix[0].length; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+        for(int i = 0; i < matrix.length; i++) {
+            reverse(matrix[i]);
+        }
+    }
+    private void reverse(int[] matrix) {
+        int start = 0, end = matrix.length-1;
+        while(start < end) {
+            int temp = matrix[start];
+            matrix[start] = matrix[end];
+            matrix[end] = temp;
+            start++;
+            end--;
+        }
+    }
+}
+
+2.
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        List<int[]> res = new ArrayList<>();
+        if(intervals.length == 0 || intervals == null) {
+            return res.toArray(new int[0][]);
+        }
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+        int start = intervals[0][0], end = intervals[0][1];
+        for(int i = 0; i < intervals.length; i++) {
+            if(intervals[i][0] <= end) {
+                end = Math.max(end, intervals[i][1]);
+            }else {
+                res.add(new int [] {start,end});
+                start = intervals[i][0];
+                end = intervals[i][1];
+            }
+        }
+        res.add(new int[] {start, end});
+        return res.toArray(new int[0][]);
+    }
+}
+
+3.
+int i=n-1;
+    int j=0;
+    while(i>=0 and j<m)
+    {
+        if(arr1[i]>=arr2[j])
+        {
+            swap(arr1[i],arr2[j]);
+            i--;
+            j++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    sort(arr1,arr1+n);
+    sort(arr2,arr2+m);
+    
+4.
+int slow = nums[0];
+int fast = nums[0]
+do {
+      slow = nums[slow]
+      fast = nums[nums[fast]]
+} while (slow != fast);
+fast = nums[0];
+while(slow != fast) {
+      slow = nums[slow]
+      fast = nums[fast]
+}
+return slow;
+
+5.
+int[] ans = new int[2];
+        boolean[] bool = new boolean[n + 1];
+        for(int i = 0; i < arr.length; i++) {
+            if(bool[arr[i]] == true) {
+                ans[0] = arr[i];
+            }
+            bool[arr[i]] = true;
+        }
+        for (int i = 1; i <= n; i++) {
+            if(bool[i] == false) {
+                ans[1] = i;
+            }
+        }
+        return ans;
+        
+6.
+static long mergeSort(long arr[], long low, long high){
+        long res = 0;
+        if(low < high){
+            long mid = low + (high - low) / 2;
+            res += mergeSort(arr, low, mid);
+            res += mergeSort(arr, mid + 1, high);
+            res += countAndMerge(arr, low, mid, high);
+        }
+        return res;
+    }
+    static long countAndMerge(long arr[], long low, long mid, long high){
+        long n1 = mid - low + 1;
+        long n2 = high - mid;
+        long[] left = new long[(int)n1];
+        long[] right = new long[(int)n2];
+        for(int i = 0; i < n1; i++){
+            left[i] = arr[(int)low + i];
+        }
+        for(int i = 0; i < n2; i++){
+            right[i] = arr[(int)mid + 1 + i];
+        }
+        long i = 0, j = 0, res = 0, k = low;
+        while(i < n1 && j < n2){
+            if(left[(int)i] <= right[(int)j]){
+                arr[(int)k] = left[(int)i];
+                i++;
+                k++;
+            }else if(right[(int)j] < left[(int)i]){
+                arr[(int)k] = right[(int)j];
+                j++;
+                k++;
+                res = res + (n1 - i);
+            }
+        }
+        while(i < n1){
+            arr[(int)k] = left[(int)i];
+            i++;
+            k++;
+        }
+        while(j < n2){
+            arr[(int)k] = right[(int)j];
+            j++;
+            k++;
+        }
+        return res;
+    }
+
 
