@@ -18,6 +18,43 @@ class Solution {
 }
 
 2.
+public List<List<Integer>> fourSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        for(int i = 0; i < nums.length ; i++) {
+            if(i > 0 && nums[i] == nums[i-1]) continue;
+            for(int j = i + 1; j < nums.length; j++) {
+                if(j > i+1 && nums[j] == nums[j - 1]) continue;
+                int k = j + 1;
+                int l = nums.length - 1;
+                while (k < l) {
+                    long sum = nums[i];
+                    sum += nums[j];
+                    sum += nums[k];
+                    sum += nums[l];
+                    if (sum == target) {
+                        List<Integer> temp = new ArrayList<>();
+                        temp.add(nums[i]);
+                        temp.add(nums[j]);
+                        temp.add(nums[k]);
+                        temp.add(nums[l]);
+                        res.add(temp);
+                        k++;
+                        l--;
+
+                        // skip the duplicates:
+                        while (k < l && nums[k] == nums[k - 1]) k++;
+                        while (k < l && nums[l] == nums[l + 1]) l--;
+                    } 
+                    else if (sum < target) k++;
+                    else l--;
+                }
+            }
+        }
+        return res;
+    }
+    
+ 
 3.
 class Solution {
     public int longestConsecutive(int[] nums) {
@@ -45,5 +82,58 @@ class Solution {
 }
 
 4.
+int maxLen(int arr[], int n)
+    {
+        // Your code here
+        HashMap<Integer, Integer> hm=new HashMap<>();
+        int sum=0;
+        int res=0;
+        for (int i = 0; i < n; i++) {
+            sum += arr[i];
+            if(!hm.containsKey(sum)) {
+                hm.put(sum, i);
+            }else {  // if current sum is seen before which concludes that it’s a zero subarray!
+                res = Math.max(res, i - hm.get(sum));
+            }
+            if(sum == 0) {
+                res = Math.max(res, i + 1);
+            }
+        }
+        return res;
+    }
+    
 5.
+int n = a.length; //size of the given array.
+        int cnt = 0;
+
+        // Step 1: Generating subarrays:
+        for (int i = 0; i < n; i++) {
+            int xorr = 0;
+            for (int j = i; j < n; j++) {
+
+                //step 2:calculate XOR of all
+                // elements:
+                xorr  ^=  a[j];
+
+                // step 3:check XOR and count:
+                if (xorr == k) cnt++;
+            }
+        }
+        return cnt;
+
+
 6.
+public int lengthOfLongestSubstring(String s) {
+        HashMap<Character, Integer> hs = new HashMap<>();
+        int right = 0, left = 0, n = s.length();
+        int len = 0;
+        while (right < n) {
+            if(hs.containsKey(s.charAt(right))) {
+                left = Math.max(hs.get(s.charAt(right)) + 1, left);
+            }
+            hs.put(s.charAt(right), right);
+            len = Math.max(len, right - left + 1);
+            right++;
+        }
+        return len;
+    }
